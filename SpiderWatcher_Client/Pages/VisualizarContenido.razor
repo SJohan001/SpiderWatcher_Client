@@ -1,9 +1,28 @@
 ﻿@page "/visualizarContenido"
-
+@inject AuthenticationService AuthService
 @inject NavigationManager NavigationManager
 
 <PageTitle>Visualizar Contenido</PageTitle>
 
+@if (!authenticated)
+{
+    <p>Redireccionando...</p>
+    @code {
+    private bool authenticated;
+
+    protected override async Task OnInitializedAsync()
+    {
+        authenticated = await AuthService.IsUserAuthenticatedAsync();
+        if (!authenticated)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
+    }
+}
+else
+{
+    
 <div class="container mt-4">
     <div class="video-preview">
         <img src="https://via.placeholder.com/800x450" class="img-fluid" alt="Vista Previa del Video">
@@ -17,6 +36,9 @@
         <p>Duración: <span id="videoDuration">00:00 H</span></p>
     </div>
 </div>
+
+}
+
 
 @code {
     private async Task BackButtonClicked()

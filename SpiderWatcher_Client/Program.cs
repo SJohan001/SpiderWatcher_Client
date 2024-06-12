@@ -9,4 +9,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 var apiBaseDeAddress = "http://localhost:8088";
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseDeAddress) });
 
+builder.Services.AddScoped<AuthenticationService>();
+
 await builder.Build().RunAsync();
