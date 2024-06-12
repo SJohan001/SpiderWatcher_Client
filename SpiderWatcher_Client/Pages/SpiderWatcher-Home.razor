@@ -23,8 +23,7 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <InputText id="password" @bind-Value="loginUserDTO.Password" class="form-control" placeholder="Contraseña" required />
-
+                    <input type="password" id="password" class="form-control" placeholder="Password" />
                     <a href="#" @onclick="ShowRecoverAccount">Forgot Password?</a>
                 </div>
                 <div class="form-group text-center">
@@ -60,7 +59,7 @@
     </div>
 }
 
-@if (showRecover)
+@if (showRecoverAccount)
 {
     <div class="modal show d-block" tabindex="-1" style="display: block;">
         <div class="modal-dialog modal-xl">
@@ -83,7 +82,7 @@
     private LoginUserDTO loginUserDTO = new LoginUserDTO();
 
     private bool showModal = false;
-    private bool showRecover = false;
+    private bool showRecoverAccount = false;
 
     private void ShowModal()
     {
@@ -97,12 +96,12 @@
 
     private void ShowRecoverAccount()
     {
-        showRecover = true;
+        showRecoverAccount = true;
     }
     
     private void HideRecoverAccount()
     {
-        showRecover = true;
+        showRecoverAccount = true;
     }
 
     private async Task Login()
