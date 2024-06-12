@@ -1,5 +1,6 @@
 ﻿@page "/crearCuenta"
 @using SpiderWatcher_Client.DTOs.UserDTO
+@using Newtonsoft.Json
 @inject HttpClient Http
 
 
@@ -67,6 +68,7 @@
     //Usar CreateUserDTO en lugar de UserModel
     private CreateUserDTO createUserDto = new CreateUserDTO();
     private ValidateUserDTO validateUserDTO = new ValidateUserDTO();
+    private CreateUserResponseDTO createUserResponseDTO = new CreateUserResponseDTO();
 
     private bool termsAgreed = false;
     //private string codigo;
@@ -78,12 +80,17 @@
         successMessage = string.Empty;
         errorMessage = string.Empty;
 
+
         try
         {
             var response = await Http.PostAsJsonAsync("User", createUserDto);
             if (response.IsSuccessStatusCode)
             {
+                string reponseBody = await response.Content.ReadAsStringAsync();
+
+                createUserResponseDTO = JsonConvert.DeserializeObject<CreateUserResponseDTO>(reponseBody);
                 successMessage = "Account created successfully!";
+
             }
             else
             {
@@ -102,7 +109,9 @@
         validateUserDTO.Password = createUserDto.Password;
         validateUserDTO.UserName = createUserDto.UserName;
 
-        validateUserDTO.IdUser = 39; //cambiar esto que esta hardcodeado
+        //validateUserDTO.IdUser = 39; //cambiar esto que esta hardcodeado
+        //convert response to CreateUserResponseDTO
+        validateUserDTO.IdUser = createUserResponseDTO.idUser;
 
         try
         {
