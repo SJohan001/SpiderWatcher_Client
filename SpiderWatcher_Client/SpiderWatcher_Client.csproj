@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\RecoverAccount.razor" />
+    <Content Remove="Pages\RecuperarCuenta.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,15 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\RecoverAccount.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\RecoverAccount.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\RecoverAccount.razor" />
+    <None Include="Pages\RecuperarCuenta.razor" />
   </ItemGroup>
 
 </Project>
