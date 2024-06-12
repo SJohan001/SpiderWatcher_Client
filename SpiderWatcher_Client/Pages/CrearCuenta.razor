@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-xl-10 col-xl-8">
             <div class="card mt-5">
                 <div class="card-body">
                     <h2 class="card-title">Create Account</h2>
@@ -15,27 +15,27 @@
                         <ValidationSummary />
                         <div class="form-group mb-3">
                             <label for="email">E-mail:</label>
-                            <InputText id="email" @bind-Value="createUserDto.Email" class="form-control" required />
+                            <InputText id="email" @bind-Value="createUserDto.Email" class="form-control" required disabled="@formSubmitted" />
                         </div>
                         <div class="form-group mb-3">
                             <label for="name">Name:</label>
-                            <InputText id="name" @bind-Value="createUserDto.Name" class="form-control" required />
+                            <InputText id="name" @bind-Value="createUserDto.Name" class="form-control" required disabled="@formSubmitted" />
                         </div>
                         <div class="form-group mb-3">
                             <label for="lastname">Last Name:</label>
-                            <InputText id="lastname" @bind-Value="createUserDto.LastName" class="form-control" required />
+                            <InputText id="lastname" @bind-Value="createUserDto.LastName" class="form-control" required disabled="@formSubmitted" />
                         </div>
                         <div class="form-group mb-3">
                             <label for="birthday">Birthday:</label>
-                            <InputDate id="birthday" @bind-Value="createUserDto.DateBirth" class="form-control" required />
+                            <InputDate id="birthday" @bind-Value="createUserDto.DateBirth" class="form-control" required disabled="@formSubmitted" />
                         </div>
                         <div class="form-group mb-3">
                             <label for="username">User Name:</label>
-                            <InputText id="username" @bind-Value="createUserDto.UserName" class="form-control" required />
+                            <InputText id="username" @bind-Value="createUserDto.UserName" class="form-control" required disabled="@formSubmitted" />
                         </div>
                         <div class="form-group mb-3">
                             <label for="password">Password:</label>
-                            <InputText id="password" @bind-Value="createUserDto.Password" type="password" class="form-control" required />
+                            <InputText id="password" @bind-Value="createUserDto.Password" type="password" class="form-control" required disabled="@formSubmitted" />
                         </div>
                         <div class="form-group form-check mb-3">
                             <InputCheckbox id="terms" @bind-Value="termsAgreed" class="form-check-input" required />
@@ -74,12 +74,13 @@
     //private string codigo;
     private string successMessage;
     private string errorMessage;
+    private bool formSubmitted = false;
 
     private async Task CreateAccount()
     {
         successMessage = string.Empty;
         errorMessage = string.Empty;
-
+        formSubmitted = true;
 
         try
         {
