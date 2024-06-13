@@ -1,11 +1,15 @@
 ﻿@page "/reproducirContenido"
 
+@using SpiderWatcher_Client.DTOs.ContentDTO
+@using Newtonsoft.Json
+@inject AuthenticationService AuthService
 @inject NavigationManager NavigationManager
+@inject HttpClient Http
 
 <h3>Reproducir Contenido</h3>
 
 <div class="video-container">
-    <video id="video" src="ruta_del_video.mp4" controls></video>
+    <video id="video" src="@readContentDTO.VideoReference" controls></video>
     <div class="controls">
         <button @onclick="RewindClicked">⏪</button>
         <button @onclick="PlayPauseClicked">@playPauseButtonText</button>
@@ -16,6 +20,7 @@
 
 @code {
     private string playPauseButtonText = "⏯️";
+    ReadContentDTO readContentDTO = new ReadContentDTO();
 
     private async Task PlayPauseClicked()
     {
