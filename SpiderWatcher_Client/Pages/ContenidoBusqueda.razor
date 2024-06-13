@@ -17,7 +17,6 @@
             <input type="text" id="searchInput" class="form-control" placeholder="Buscar" @bind="searchQuery" @onkeydown="HandleKeyDown">
         </div>
     </div>
-    <div class="row" id="videoGrid">
         <!-- Video Thumbnails will be inserted here -->
         @if(contents2 is null)
         {
@@ -46,8 +45,6 @@
                 }
             </div>
         }
-
-    </div>
 
 </div>
 
@@ -88,8 +85,8 @@
 
                 var token = await AuthService.GetTokenAsync();
                 Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                var response = await Http.GetAsync("Content");
+                var userID = 40; //esto habra que jalarlo de la sesion
+                var response = await Http.GetAsync($"Content/all/{userID}");
                 if (response.IsSuccessStatusCode)
                 {
                     var responseBody = await response.Content.ReadAsStringAsync();
