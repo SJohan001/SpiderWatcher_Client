@@ -1,4 +1,4 @@
-﻿@page "/visualizarContenido"
+﻿@page "/visualizarContenido/{id}"
 @using SpiderWatcher_Client.DTOs.ContentDTO
 @using Newtonsoft.Json
 @inject AuthenticationService AuthService
@@ -19,6 +19,10 @@
         if (!authenticated)
         {
             NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            await CargarInformacion();
         }
     }
 }
@@ -43,7 +47,30 @@ else
 
 
 @code {
+    [Parameter]
+    public string Id { get; set; }
+
     ReadContentDTO readContentDTO = new ReadContentDTO();
+
+    private async Task CargarInformacion()
+    {
+        try
+        {
+            var response = await Http.GetAsync($"Content/{Id}");
+            if(response.IsSuccessStatusCode)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                readContentDTO = JsonConvert.DeserializeObject<ReadContentDTO>(responseBody);
+            }
+            else
+            {
+                Console.WriteLine("Error al obtener el contenido.");
+            }
+        }catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
 
     private async Task BackButtonClicked()
     {

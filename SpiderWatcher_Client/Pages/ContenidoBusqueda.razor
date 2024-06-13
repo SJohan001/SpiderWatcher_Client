@@ -31,7 +31,7 @@
                 @foreach (var content in contents2)
                 {
                     <div class="col mt-3">
-                        <div class="card">
+                        <div class="card" @onclick="() => VerDetalles(content.idContent)">
                             <img src="" class="card-img-top" alt="No image"/>
 
                             <div class="card-body">
@@ -107,5 +107,11 @@
             // Procesa el resultado de la búsqueda
         }
     }
+
+    private void VerDetalles(int id)
+    {
+        NavigationManager.NavigateTo($"/visualizarContenido/{id}");
+    }
+
 }
 
