@@ -1,5 +1,7 @@
 ﻿@page "/contenidoBusqueda"
-
+@using SpiderWatcher_Client.DTOs.ContentDTO
+@using Newtonsoft.Json
+@inject HttpClient Http
 @inject NavigationManager NavigationManager
 
 <div class="container mt-4">
@@ -9,7 +11,7 @@
         </div>
         <div class="col">
             <span class="icon">&#128269;</span>
-            <input type="text" id="searchInput" class="form-control" placeholder="Buscar" value="Dragon">
+            <input type="text" id="searchInput" class="form-control" placeholder="Buscar" @bind="searchQuery" @onkeydown="HandleKeyDown">
         </div>
     </div>
     <div class="row" id="videoGrid">
@@ -18,10 +20,33 @@
 </div>
 
 @code {
+    private string searchQuery;
+    private string successMessage;
+    private string errorMessage;
+    private ContentsDTO contentsDTO = new ContentsDTO();
+
     private async Task BackButtonClicked()
     {
-        // Regresar
         NavigationManager.NavigateTo("/");
+    }
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            ExecuteSearch();
+        }
+    }
+
+    private async void ExecuteSearch()
+    {
+        if (!string.IsNullOrEmpty(searchQuery))
+        {
+            Console.WriteLine($"Buscar: {searchQuery}");
+            // var result = await Http.GetAsync($"api/busqueda?query={searchQuery}");
+            // var content = await result.Content.ReadAsStringAsync();
+            // Procesa el resultado de la búsqueda
+        }
     }
 }
 
