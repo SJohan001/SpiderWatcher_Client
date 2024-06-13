@@ -1,6 +1,9 @@
 ﻿@page "/contenidoBusqueda"
 @using SpiderWatcher_Client.DTOs.ContentDTO
 @using Newtonsoft.Json
+@using SpiderWatcher_Client.Models
+@using System.Net.Http.Headers
+@inject AuthenticationService AuthService
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
@@ -16,7 +19,25 @@
     </div>
     <div class="row" id="videoGrid">
         <!-- Video Thumbnails will be inserted here -->
+        @if(contents2 is null)
+        {
+            <p>Empty</p>
+        }else if(contents2.Count == 0)
+        {
+            <p>No se encontraron resultados</p>
+        }
+        else
+        {
+            <div class="row">
+                @foreach (var content in contents2)
+                {
+                    <p>@content.title</p>
+                }
+            </div>
+        }
+
     </div>
+
 </div>
 
 @code {
@@ -24,6 +45,14 @@
     private string successMessage;
     private string errorMessage;
     private ContentsDTO contentsDTO = new ContentsDTO();
+    private Contents contents { get; set; }
+    private List<ContentsDTO> contents2 = new List<ContentsDTO>();
+
+    protected override Task OnInitializedAsync()
+    {
+        ExecuteSearch();
+        return base.OnInitializedAsync();
+    }
 
     private async Task BackButtonClicked()
     {
@@ -43,7 +72,29 @@
         if (!string.IsNullOrEmpty(searchQuery))
         {
             Console.WriteLine($"Buscar: {searchQuery}");
-            // var result = await Http.GetAsync($"api/busqueda?query={searchQuery}");
+            try
+            {
+
+                var token = await AuthService.GetTokenAsync();
+                Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var response = await Http.GetAsync("Content");
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    contents2 = JsonConvert.DeserializeObject<List<ContentsDTO>>(responseBody);
+                    StateHasChanged();
+                }
+                else
+                {
+                    errorMessage = "No se encontraron resultados";
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+            }
+        // var result = await Http.GetAsync($"api/busqueda?query={searchQuery}");
             // var content = await result.Content.ReadAsStringAsync();
             // Procesa el resultado de la búsqueda
         }
