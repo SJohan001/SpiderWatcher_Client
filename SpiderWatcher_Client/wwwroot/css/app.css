@@ -101,9 +101,3 @@ a, .btn-link {
 code {
     color: #c02d76;
 }
-
-div.card {
-    width: 300px;
-    box-shadow: 0 4px 8px 0 gray, 0 6px 20px 0 gray;
-    text-align: center;
-}
