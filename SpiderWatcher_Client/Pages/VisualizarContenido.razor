@@ -1,6 +1,9 @@
 ﻿@page "/visualizarContenido"
+@using SpiderWatcher_Client.DTOs.ContentDTO
+@using Newtonsoft.Json
 @inject AuthenticationService AuthService
 @inject NavigationManager NavigationManager
+@inject HttpClient Http
 
 <PageTitle>Visualizar Contenido</PageTitle>
 
@@ -18,32 +21,37 @@
             NavigationManager.NavigateTo("/");
         }
     }
-    }
+}
 }
 else
 {
-    
-<div class="container mt-4">
-    <div class="video-preview">
-        <img src="https://via.placeholder.com/800x450" class="img-fluid" alt="Vista Previa del Video">
-        <button class="btn btn-light" @onclick="BackButtonClicked">&#x2190; Atrás</button>
+    <div class="container mt-4">
+        <div class="video-preview">
+            <img src="@readContentDTO.ImageReference" class="img-fluid" alt="Vista Previa del Video">
+            <button class="play-button" @onclick="PlayVideo">&#9658;</button>
+            <button class="btn btn-light back-button" @onclick="BackButtonClicked">&#x2190; Atrás</button>
+        </div>
+        <div class="video-details mt-3">
+            <h1 id="videoTitle">@readContentDTO.Title</h1>
+            <p id="videoDescription">@readContentDTO.Description</p>
+            <p class="director">Director: <span id="videoDirector">@readContentDTO.Director</span></p>
+            <p>Fecha: <span id="videoDate">@readContentDTO.PublicationDate</span></p>
+            <p>Duración: <span id="videoDuration">@readContentDTO.Duration</span></p>
+        </div>
     </div>
-    <div class="video-details mt-3">
-        <h1 id="videoTitle">Título del Video</h1>
-        <p id="videoDescription">Descripción del video. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce interdum elit eu nisl convallis, a eleifend justo facilisis.</p>
-        <p class="director">Director: <span id="videoDirector">Nombre del Director</span></p>
-        <p>Fecha: <span id="videoDate">DD/MM/YYYY</span></p>
-        <p>Duración: <span id="videoDuration">00:00 H</span></p>
-    </div>
-</div>
-
 }
 
 
 @code {
+    ReadContentDTO readContentDTO = new ReadContentDTO();
+
     private async Task BackButtonClicked()
     {
-        // Regresar
         NavigationManager.NavigateTo("/contenidoBusqueda");
+    }
+
+    private void PlayVideo()
+    {
+        NavigationManager.NavigateTo("/reproducirContenido");
     }
 }
