@@ -31,7 +31,18 @@
             <div class="row">
                 @foreach (var content in contents2)
                 {
-                    <p>@content.title</p>
+                    <div class="col mt-3">
+                        <div class="card">
+                            <img src="" class="card-img-top" alt="No image"/>
+
+                            <div class="card-body">
+                                <p class="card-text"><strong>@content.title</strong></p>
+                                <p class="card-text">@content.idContent</p>
+                                <p class="card-text">@content.imageReference</p>
+                            </div>
+
+                        </div>
+                    </div>
                 }
             </div>
         }
@@ -45,7 +56,7 @@
     private string successMessage;
     private string errorMessage;
     private ContentsDTO contentsDTO = new ContentsDTO();
-    private Contents contents { get; set; }
+    //private Contents contents { get; set; }
     private List<ContentsDTO> contents2 = new List<ContentsDTO>();
 
     protected override Task OnInitializedAsync()

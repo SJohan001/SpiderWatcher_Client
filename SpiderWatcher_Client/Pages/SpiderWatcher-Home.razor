@@ -109,7 +109,7 @@
         var isAuthenticated = await AuthService.LoginAsync(loginUserDTO);
         if (isAuthenticated)
         {
-            NavigationManager.NavigateTo("/visualizarContenido");
+            NavigationManager.NavigateTo("/contenidoBusqueda");
         }
         else
         {
