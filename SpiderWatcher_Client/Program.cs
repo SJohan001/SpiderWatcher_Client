@@ -18,6 +18,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseD
 
 builder.Services.AddScoped<AuthenticationService>();
 
-builder.Services.AddSingleton<NavigationService>();
+builder.Services.AddScoped<NavigationService>();
 
 await builder.Build().RunAsync();
