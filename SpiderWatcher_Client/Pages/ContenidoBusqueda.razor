@@ -14,7 +14,7 @@
         </div>
         <div class="col bg-dark">
             <div class="input-group">
-                <span class="input-group-text icon">&#128269;</span>
+                <span class="input-group-text icon bg-dark text-white">&#128269;</span>
                 <input type="text" id="searchInput" class="form-control bg-secondary text-white" placeholder="Buscar" @bind="searchQuery" @onkeydown="HandleKeyDown">
             </div>
         </div>
@@ -33,13 +33,13 @@
                 @foreach (var content in contents2)
                 {
                     <div class="col mt-3">
-                        <div class="card" @onclick="() => VerDetalles(content.idContent)">
-                        <img src="" class="card-img-top" alt="No image" style="color: black;" />
+                        <div class="card bg-dark text-white" @onclick="() => VerDetalles(content.idContent)">
+                            <img src="" class="card-img-top" alt="No image"/>
 
                             <div class="card-body">
-                            <p class="card-text" style="color: black;"><strong>@content.title</strong></p>
-                            <p class="card-text" style="color: black;">@content.idContent</p>
-                            <p class="card-text" style="color: black;">@content.imageReference</p>
+                                <p class="card-text"><strong>@content.title</strong></p>
+                                <p class="card-text">@content.idContent</p>
+                                <p class="card-text">@content.imageReference</p>
                             </div>
 
                         </div>
