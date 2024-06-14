@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using SpiderWatcher_Client;
 using SpiderWatcher_Client.Conexion;
+using SpiderWatcher_Client.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -16,5 +17,7 @@ var apiBaseDeAddress = "http://localhost:8088";
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseDeAddress) });
 
 builder.Services.AddScoped<AuthenticationService>();
+
+builder.Services.AddSingleton<NavigationService>();
 
 await builder.Build().RunAsync();

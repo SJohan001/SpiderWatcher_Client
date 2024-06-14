@@ -1,51 +1,73 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">SpiderWatcher_Client</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
+﻿@using Microsoft.AspNetCore.Components;
+@using SpiderWatcher_Client.Services
+@inject NavigationService NavService
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> SpiderWatcher-Home
-            </NavLink>
+<div class="container-fluid mt-3 bg-dark">
+    <div class="row">
+        <div class="col">
+            @if (NavService.CurrentPage.StartsWith("/"))
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> SpiderWatcher-Home
+                    </NavLink>
+                </div>
+            }else if (NavService.CurrentPage.StartsWith("/crearCuenta"))
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="crearCuenta">
+                        <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> CrearCuenta
+                    </NavLink>
+                </div>
+            }
+            else if (NavService.CurrentPage.StartsWith("recuperarCuenta"))
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="recuperarCuenta">
+                        <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> RecuperarCuenta
+                    </NavLink>
+                </div>
+            }
+            else if (NavService.CurrentPage.StartsWith("contenidoBusqueda"))
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="contenidoBusqueda">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> ContenidoBusqueda
+                    </NavLink>
+                </div>
+            }
+            else if (NavService.CurrentPage.StartsWith("reproducirContenido"))
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="reproducirContenido">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> ReproducirContenido
+                    </NavLink>
+                </div>
+            }
+            else if (NavService.CurrentPage.StartsWith("visualizarContenido"))
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="visualizarContenido">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> VisualizarContenido
+                    </NavLink>
+                </div>
+            }
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="crearCuenta">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> CrearCuenta
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="recuperarCuenta">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> RecuperarCuenta
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="contenidoBusqueda">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> ContenidoBusqueda
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="reproducirContenido">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> ReproducirContenido
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="visualizarContenido">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> VisualizarContenido
-            </NavLink>
-        </div>
-    </nav>
+    </div>
 </div>
 
 @code {
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Console.WriteLine($"Current Page: {NavService.CurrentPage}");
+        }
+    }
 
     private void ToggleNavMenu()
     {
