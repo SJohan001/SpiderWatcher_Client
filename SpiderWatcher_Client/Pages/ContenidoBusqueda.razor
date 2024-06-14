@@ -3,6 +3,7 @@
 @using Newtonsoft.Json
 @using SpiderWatcher_Client.Models
 @using System.Net.Http.Headers
+@inject Conexion.AzureBlobService AzureBlobService
 @inject AuthenticationService AuthService
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
@@ -34,7 +35,14 @@
                 {
                     <div class="col mt-3">
                         <div class="card bg-dark text-white" @onclick="() => VerDetalles(content.idContent)">
-                            <img src="" class="card-img-top" alt="No image"/>
+                        @if (content.ImageData != null)
+                        {
+                            <img src="data:image/png;base64,@Convert.ToBase64String(content.ImageData)" class="card-img-top" alt="No image" />
+                        }
+                        else
+                        {
+                            <img src="" class="card-img-top" alt="No image" />
+                        }
 
                             <div class="card-body">
                                 <p class="card-text"><strong>@content.title</strong></p>
@@ -93,6 +101,12 @@
                 {
                     var responseBody = await response.Content.ReadAsStringAsync();
                     contents2 = JsonConvert.DeserializeObject<List<ContentsDTO>>(responseBody);
+                    foreach (var content in contents2)
+                    {
+                        content.ImageData = await AzureBlobService.GetImageAsync(content.imageReference);
+                    }
+
+   
                     StateHasChanged();
                 }
                 else
