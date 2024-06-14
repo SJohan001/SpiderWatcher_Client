@@ -1,6 +1,8 @@
 ﻿@page "/visualizarContenido/{id}"
+@using SpiderWatcher_Client.Conexion
 @using SpiderWatcher_Client.DTOs.ContentDTO
 @using Newtonsoft.Json
+@inject Conexion.AzureBlobService AzureBlobService
 @inject AuthenticationService AuthService
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
@@ -31,7 +33,14 @@ else
 {
     <div class="container mt-4 bg-dark text-white">
         <div class="video-preview">
-            <img src="@readContentDTO.ImageReference" class="img-fluid" alt="Vista Previa del Video">
+            @if(readContentDTO.ImageData != null)
+            {
+                <img src="data:image/png;base64,@Convert.ToBase64String(readContentDTO.ImageData)" class="img-fluid" alt="Vista Previa del Video">
+            }
+            else
+            {
+                <img src="" class="img-fluid" alt="Vista Previa del Video">
+            }
             <button class="play-button btn btn-primary" @onclick="PlayVideo">&#9658;</button>
             <button class="btn btn-light back-button" @onclick="BackButtonClicked">&#x2190; Atrás</button>
         </div>
@@ -61,6 +70,8 @@ else
             {
                 string responseBody = await response.Content.ReadAsStringAsync();
                 readContentDTO = JsonConvert.DeserializeObject<ReadContentDTO>(responseBody);
+                readContentDTO.ImageData = await AzureBlobService.GetImageAsync(readContentDTO.ImageReference);
+
             }
             else
             {

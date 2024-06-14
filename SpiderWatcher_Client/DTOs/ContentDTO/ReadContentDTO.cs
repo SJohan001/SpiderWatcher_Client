@@ -1,4 +1,6 @@
-﻿namespace SpiderWatcher_Client.DTOs.ContentDTO
+﻿using Newtonsoft.Json;
+
+namespace SpiderWatcher_Client.DTOs.ContentDTO
 {
     public class ReadContentDTO
     {
@@ -12,5 +14,8 @@
         public int Rating { get; init; }
         public string ImageReference { get; init; }
         public string VideoReference { get; init; }
+
+        [JsonIgnore]
+        public byte[] ImageData { get; set; }  // Nueva propiedad para almacenar los datos de la imagen
     }
 }
