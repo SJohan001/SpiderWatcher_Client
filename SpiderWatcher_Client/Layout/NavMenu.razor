@@ -5,14 +5,15 @@
 <div class="container-fluid mt-3 bg-dark">
     <div class="row">
         <div class="col">
-            @if (NavService.CurrentPage.StartsWith("/"))
+            @if (NavService.CurrentPage != null && NavService.CurrentPage.StartsWith("/"))
             {
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                         <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> SpiderWatcher-Home
                     </NavLink>
                 </div>
-            }else if (NavService.CurrentPage.StartsWith("/crearCuenta"))
+            }
+            else if (NavService.CurrentPage != null && NavService.CurrentPage.StartsWith("/crearCuenta"))
             {
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="crearCuenta">
@@ -20,7 +21,7 @@
                     </NavLink>
                 </div>
             }
-            else if (NavService.CurrentPage.StartsWith("recuperarCuenta"))
+            else if (NavService.CurrentPage != null && NavService.CurrentPage.StartsWith("recuperarCuenta"))
             {
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="recuperarCuenta">
@@ -28,7 +29,7 @@
                     </NavLink>
                 </div>
             }
-            else if (NavService.CurrentPage.StartsWith("contenidoBusqueda"))
+            else if (NavService.CurrentPage != null && NavService.CurrentPage.StartsWith("contenidoBusqueda"))
             {
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="contenidoBusqueda">
@@ -36,7 +37,7 @@
                     </NavLink>
                 </div>
             }
-            else if (NavService.CurrentPage.StartsWith("reproducirContenido"))
+            else if (NavService.CurrentPage != null && NavService.CurrentPage.StartsWith("reproducirContenido"))
             {
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="reproducirContenido">
@@ -44,7 +45,7 @@
                     </NavLink>
                 </div>
             }
-            else if (NavService.CurrentPage.StartsWith("visualizarContenido"))
+            else if (NavService.CurrentPage != null && NavService.CurrentPage.StartsWith("visualizarContenido"))
             {
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="visualizarContenido">
@@ -60,14 +61,8 @@
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-    
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender)
-        {
-            Console.WriteLine($"Current Page: {NavService.CurrentPage}");
-        }
-    }
+
+
 
     private void ToggleNavMenu()
     {
