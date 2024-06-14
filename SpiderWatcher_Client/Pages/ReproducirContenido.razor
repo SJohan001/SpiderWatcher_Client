@@ -11,11 +11,11 @@
 <div class="video-container">
     <video id="video" src="@readContentDTO.VideoReference" controls></video>
     <div class="controls">
-        <button @onclick="RewindClicked" class="btn btn-light">⏪</button>
-        <button @onclick="PlayPauseClicked" class="btn btn-primary">@playPauseButtonText</button>
-        <button @onclick="ForwardClicked" class="btn btn-light">⏩</button>
+        <button @onclick="RewindClicked" class="btn btn-dark">⏪</button>
+        <button @onclick="PlayPauseClicked" class="btn btn-dark">@playPauseButtonText</button>
+        <button @onclick="ForwardClicked" class="btn btn-dark">⏩</button>
     </div>
-    <button @onclick="BackButtonClicked" class="btn btn-light back-button">← Atrás</button>
+    <button @onclick="BackButtonClicked" class="btn btn-dark back-button">← Atrás</button>
 </div>
 
 @code {
