@@ -13,8 +13,10 @@
             <button class="btn btn-secondary" @onclick="BackButtonClicked">&#x2190;</button>
         </div>
         <div class="col bg-dark">
-            <span class="icon">&#128269;</span>
-            <input type="text" id="searchInput" class="form-control bg-secondary text-white" placeholder="Buscar" @bind="searchQuery" @onkeydown="HandleKeyDown">
+            <div class="input-group">
+                <span class="input-group-text icon">&#128269;</span>
+                <input type="text" id="searchInput" class="form-control bg-secondary text-white" placeholder="Buscar" @bind="searchQuery" @onkeydown="HandleKeyDown">
+            </div>
         </div>
     </div>
         <!-- Video Thumbnails will be inserted here -->
@@ -115,3 +117,11 @@
 
 }
 
+<style>
+    .input-group-text.icon {
+        font-size: 1.2rem; 
+        color: #17a2b8; 
+        background-color: #343a40; 
+        border: 1px solid #ced4da; 
+    }
+</style>
