@@ -29,10 +29,10 @@
 }
 else
 {
-    <div class="container mt-4">
+    <div class="container mt-4 bg-dark text-white">
         <div class="video-preview">
             <img src="@readContentDTO.ImageReference" class="img-fluid" alt="Vista Previa del Video">
-            <button class="play-button" @onclick="PlayVideo">&#9658;</button>
+            <button class="play-button btn btn-primary" @onclick="PlayVideo">&#9658;</button>
             <button class="btn btn-light back-button" @onclick="BackButtonClicked">&#x2190; Atrás</button>
         </div>
         <div class="video-details mt-3">

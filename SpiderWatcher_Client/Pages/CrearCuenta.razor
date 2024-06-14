@@ -4,41 +4,41 @@
 @inject HttpClient Http
 
 
-<div class="container">
+<div class="container bg-dark text-white">
     <div class="row justify-content-center">
-        <div class="col-xl-10 col-xl-8">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <h2 class="card-title">Create Account</h2>
+        <div class="col-xl-10 col-xl-8 bg-dark">
+            <div class="card mt-5 bg-dark">
+                <div class="card-body bg-dark">
+                    <h2 class="card-title text-light">Create Account</h2>
                     <EditForm Model="@createUserDto" OnValidSubmit="@CreateAccount">
                         <DataAnnotationsValidator />
                         <ValidationSummary />
                         <div class="form-group mb-3">
                             <label for="email">E-mail:</label>
-                            <InputText id="email" @bind-Value="createUserDto.Email" class="form-control" required disabled="@formSubmitted" />
+                            <InputText id="email" @bind-Value="createUserDto.Email" class="form-control bg-secondary text-white" required disabled="@formSubmitted" />
                         </div>
                         <div class="form-group mb-3">
                             <label for="name">Name:</label>
-                            <InputText id="name" @bind-Value="createUserDto.Name" class="form-control" required disabled="@formSubmitted" />
+                            <InputText id="name" @bind-Value="createUserDto.Name" class="form-control bg-secondary text-white" required disabled="@formSubmitted" />
                         </div>
                         <div class="form-group mb-3">
                             <label for="lastname">Last Name:</label>
-                            <InputText id="lastname" @bind-Value="createUserDto.LastName" class="form-control" required disabled="@formSubmitted" />
+                            <InputText id="lastname" @bind-Value="createUserDto.LastName" class="form-control bg-secondary text-white" required disabled="@formSubmitted" />
                         </div>
                         <div class="form-group mb-3">
                             <label for="birthday">Birthday:</label>
-                            <InputDate id="birthday" @bind-Value="createUserDto.DateBirth" class="form-control" required disabled="@formSubmitted" />
+                            <InputDate id="birthday" @bind-Value="createUserDto.DateBirth" class="form-control bg-secondary text-white" required disabled="@formSubmitted" />
                         </div>
                         <div class="form-group mb-3">
                             <label for="username">User Name:</label>
-                            <InputText id="username" @bind-Value="createUserDto.UserName" class="form-control" required disabled="@formSubmitted" />
+                            <InputText id="username" @bind-Value="createUserDto.UserName" class="form-control bg-secondary text-white" required disabled="@formSubmitted" />
                         </div>
                         <div class="form-group mb-3">
                             <label for="password">Password:</label>
-                            <InputText id="password" @bind-Value="createUserDto.Password" type="password" class="form-control" required disabled="@formSubmitted" />
+                            <InputText id="password" @bind-Value="createUserDto.Password" type="password" class="form-control bg-secondary text-white" required disabled="@formSubmitted" />
                         </div>
                         <div class="form-group form-check mb-3">
-                            <InputCheckbox id="terms" @bind-Value="termsAgreed" class="form-check-input" required />
+                            <InputCheckbox id="terms" @bind-Value="termsAgreed" class="form-check-input bg-secondary text-white" required />
                             <label class="form-check-label" for="terms">By creating an account you agree to our <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</label>
                         </div>
                         <button type="submit" id="submit" class="btn btn-primary" disabled="@(!termsAgreed)">Create Account</button>
@@ -49,7 +49,7 @@
                         <div class="alert alert-success mt-3">@successMessage</div>
                         <div class="form-group mb-3">
                             <label for="codigo">Codigo:</label>
-                            <InputText id="codigo" @bind-Value="validateUserDTO.ValidationMessage" class="form-control" required />
+                            <InputText id="codigo" @bind-Value="validateUserDTO.ValidationMessage" class="form-control bg-secondary text-white" required />
                         </div>
                         <button type="submit" id="submit" class="btn btn-primary" @onclick="ValidarCuenta" disabled="@(string.IsNullOrEmpty(validateUserDTO.ValidationMessage))">Validate Account</button>
                     }

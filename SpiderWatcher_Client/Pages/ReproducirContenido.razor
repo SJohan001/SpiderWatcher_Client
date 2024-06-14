@@ -11,11 +11,11 @@
 <div class="video-container">
     <video id="video" src="@readContentDTO.VideoReference" controls></video>
     <div class="controls">
-        <button @onclick="RewindClicked">⏪</button>
-        <button @onclick="PlayPauseClicked">@playPauseButtonText</button>
-        <button @onclick="ForwardClicked">⏩</button>
+        <button @onclick="RewindClicked" class="btn btn-light">⏪</button>
+        <button @onclick="PlayPauseClicked" class="btn btn-primary">@playPauseButtonText</button>
+        <button @onclick="ForwardClicked" class="btn btn-light">⏩</button>
     </div>
-    <button @onclick="BackButtonClicked" class="back-button">←</button>
+    <button @onclick="BackButtonClicked" class="btn btn-light back-button">← Atrás</button>
 </div>
 
 @code {
@@ -46,3 +46,38 @@
         NavigationManager.NavigateTo("/visualizarContenido");
     }
 }
+
+<style>
+    .video-container {
+        position: relative;
+        width: 100%;
+        background-color: #343a40; 
+        color: white; 
+    }
+
+    .video-container video {
+        width: 100%;
+        display: block;
+    }
+
+    .controls {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .controls button {
+        margin: 0 10px; 
+    }
+
+    .back-button {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+</style>

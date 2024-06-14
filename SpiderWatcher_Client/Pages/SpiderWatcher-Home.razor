@@ -9,9 +9,9 @@
 <div class="container-fluid bg-dark text-white">
     <div class="row full-height">
         <div class="col-md-6 d-flex justify-content-center align-items-center left-section">
-            <div>
+            <div class="image-container position-relative">
                 <img src="https://storage.prompt-hunt.workers.dev/clgof48ov004vjs08tdzg1ggm_1" alt="Your Image" class="img-fluid">
-                <h1 class="text-center">SpiderWatcher</h1>
+                <h1 class="image-text position-absolute text-center w-100">SpiderWatcher</h1>
             </div>
         </div>
         <div class="col-md-6 d-flex justify-content-center align-items-center right-section bg-dark">
@@ -42,11 +42,11 @@
 
 @if (showModal)
 {
-    <div class="modal show d-block" tabindex="-1" style="display: block;">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+    <div class="modal show d-block gradient-background text-white" tabindex="-1" style="display: block;">
+        <div class="modal-dialog modal-lg bg-dark">
+            <div class="modal-content bg-dark">
                 <div class="modal-header">
-                    <button type="button" class="btn-close" @onclick="HideModal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" @onclick="HideModal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
                     <CrearCuenta />
@@ -61,11 +61,11 @@
 
 @if (showRecoverAccount)
 {
-    <div class="modal show d-block" tabindex="-1" style="display: block;">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+    <div class="modal show d-block gradient-background text-white" tabindex="-1" style="display: block;">
+        <div class="modal-dialog modal-lg bg-dark">
+            <div class="modal-content bg-dark">
                 <div class="modal-header">
-                    <button type="button" class="btn-close" @onclick="HideRecoverAccount" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" @onclick="HideRecoverAccount" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
                     <RecuperarCuenta />
@@ -120,3 +120,22 @@
         }
     }   
 }
+
+<style>
+    .image-container {
+        position: relative;
+        text-align: center;
+    }
+
+    .image-text {
+        top: 10px; /* Ajusta este valor según sea necesario */
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        font-size: 2rem;
+        z-index: 1;
+    }
+    .gradient-background {
+        backdrop-filter: blur(10px);
+    }
+</style>

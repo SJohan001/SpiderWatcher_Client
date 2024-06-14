@@ -7,14 +7,14 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
-<div class="container mt-4">
+<div class="container mt-4 bg-dark text-white">
     <div class="row mb-4 align-items-center">
-        <div class="col-auto">
+        <div class="col-auto bg-dark">
             <button class="btn btn-secondary" @onclick="BackButtonClicked">&#x2190;</button>
         </div>
-        <div class="col">
+        <div class="col bg-dark">
             <span class="icon">&#128269;</span>
-            <input type="text" id="searchInput" class="form-control" placeholder="Buscar" @bind="searchQuery" @onkeydown="HandleKeyDown">
+            <input type="text" id="searchInput" class="form-control bg-secondary text-white" placeholder="Buscar" @bind="searchQuery" @onkeydown="HandleKeyDown">
         </div>
     </div>
         <!-- Video Thumbnails will be inserted here -->
