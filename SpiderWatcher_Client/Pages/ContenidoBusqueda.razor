@@ -34,7 +34,7 @@
                 @foreach (var content in contents2)
                 {
                     <div class="col mt-3">
-                        <div class="card bg-dark text-white" @onclick="() => VerDetalles(content.idContent)">
+                    <div class="cardVideo bg-dark text-white align-items-center" @onclick="() => VerDetalles(content.idContent)">
                         @if (content.ImageData != null)
                         {
                             <img src="data:image/png;base64,@Convert.ToBase64String(content.ImageData)" class="card-img-top" alt="No image" />
@@ -45,9 +45,7 @@
                         }
 
                             <div class="card-body">
-                                <p class="card-text"><strong>@content.title</strong></p>
-                                <p class="card-text">@content.idContent</p>
-                                <p class="card-text">@content.imageReference</p>
+                            <p class="card-text titleCardText align-items-center"><strong>@content.title</strong></p>
                             </div>
 
                         </div>
@@ -87,15 +85,13 @@
 
     private async void ExecuteSearch()
     {
-        if (!string.IsNullOrEmpty(searchQuery))
-        {
             Console.WriteLine($"Buscar: {searchQuery}");
             try
             {
 
                 var token = await AuthService.GetTokenAsync();
                 Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var userID = 40; //esto habra que jalarlo de la sesion
+                var userID = 42; //esto habra que jalarlo de la sesion
                 var response = await Http.GetAsync($"Content/all/{userID}");
                 if (response.IsSuccessStatusCode)
                 {
@@ -121,7 +117,6 @@
         // var result = await Http.GetAsync($"api/busqueda?query={searchQuery}");
             // var content = await result.Content.ReadAsStringAsync();
             // Procesa el resultado de la búsqueda
-        }
     }
 
     private void VerDetalles(int id)
@@ -137,5 +132,17 @@
         color: #17a2b8; 
         background-color: #343a40; 
         border: 1px solid #ced4da; 
+    }
+
+    div.cardVideo {
+        width: 300px;
+        height: 600px;
+        box-shadow: 0 4px 8px 0 gray, 0 6px 20px 0 gray;
+        text-align: center;
+    }
+
+    .titleCardText{
+        font-size: 1.5rem;
+        color: #00e5ff;
     }
 </style>
