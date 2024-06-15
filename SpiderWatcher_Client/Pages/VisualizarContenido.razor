@@ -90,6 +90,7 @@ else
 
     private void PlayVideo()
     {
-        NavigationManager.NavigateTo("/reproducirContenido");
+        var videoReference = readContentDTO.VideoReference;
+        NavigationManager.NavigateTo($"/reproducirContenido/{videoReference}");
     }
 }

@@ -1,24 +1,68 @@
-﻿@page "/reproducirContenido"
+﻿@page "/reproducirContenido/{videoReference}"
 
+@using SpiderWatcher_Client.Conexion
 @using SpiderWatcher_Client.DTOs.ContentDTO
 @using Newtonsoft.Json
+@using SpiderWatcher_Client.Models
 @inject AuthenticationService AuthService
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
+@inject Conexion.AzureVideoService AzureVideoService
 
 <h3>Reproducir Contenido</h3>
 
 <div class="video-container">
-    <video id="video" src="@readContentDTO.VideoReference" controls></video>
-    <div class="controls">
-        <button @onclick="RewindClicked" class="btn btn-dark">⏪</button>
-        <button @onclick="PlayPauseClicked" class="btn btn-dark">@playPauseButtonText</button>
-        <button @onclick="ForwardClicked" class="btn btn-dark">⏩</button>
-    </div>
-    <button @onclick="BackButtonClicked" class="btn btn-dark back-button">← Atrás</button>
+    @if (!string.IsNullOrEmpty(videoUrl))
+    {
+        <video id="video" controls>
+            <source src="@videoUrl" type="video/mp4" />
+            Your browser does not support the video tag.
+        </video>
+        <div class="controls">
+            <button @onclick="RewindClicked" class="btn btn-dark">⏪</button>
+            <button @onclick="PlayPauseClicked" class="btn btn-dark">@playPauseButtonText</button>
+            <button @onclick="ForwardClicked" class="btn btn-dark">⏩</button>
+        </div>
+        <button @onclick="BackButtonClicked" class="btn btn-dark back-button">← Atrás</button>
+    }
+    else
+    {
+        <p>Loading video...</p>
+    }
 </div>
 
 @code {
+    [Parameter]
+    public string videoReference { get; set; }
+    private byte[] videoData;
+    private string videoUrl;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            videoData = await AzureVideoService.GetVideoAsync(videoReference);
+            videoUrl = ConvertToDataUrl(videoData);
+            Console.WriteLine(videoUrl); // Agregar esta línea para debug
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+
+    private string ConvertToDataUrl(byte[] videoData)
+    {
+        if (videoData == null || videoData.Length == 0)
+        {
+            return null;
+        }
+
+        var base64String = Convert.ToBase64String(videoData);
+        return $"data:video/mp4;base64,{base64String}";
+    }
+
     private string playPauseButtonText = "⏯️";
     ReadContentDTO readContentDTO = new ReadContentDTO();
 
@@ -51,14 +95,14 @@
     .video-container {
         position: relative;
         width: 100%;
-        background-color: #343a40; 
-        color: white; 
+        background-color: #343a40;
+        color: white;
     }
 
-    .video-container video {
-        width: 100%;
-        display: block;
-    }
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
 
     .controls {
         position: absolute;
@@ -71,9 +115,9 @@
         width: 100%;
     }
 
-    .controls button {
-        margin: 0 10px; 
-    }
+        .controls button {
+            margin: 0 10px;
+        }
 
     .back-button {
         position: absolute;
