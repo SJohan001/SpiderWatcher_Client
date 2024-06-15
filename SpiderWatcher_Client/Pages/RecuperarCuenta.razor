@@ -1,4 +1,7 @@
 ﻿@page "/recuperarCuenta"
+@using SpiderWatcher_Client.DTOs.UserDTO
+@using Newtonsoft.Json
+@inject HttpClient Http
 
 <div class="container bg-dark text-white">
     <div class="row justify-content-center">
@@ -33,6 +36,8 @@
 </div>
 
 @code {
+    private UpdateUserContainerDTO updateUserContainerDTO = new UpdateUserContainerDTO();
+    private UpdatePasswordUserDTO updatePasswordUserDTO = new UpdatePasswordUserDTO();
     private string email;
     private string code;
     private string newPassword;
