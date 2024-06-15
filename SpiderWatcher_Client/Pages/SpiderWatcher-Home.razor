@@ -6,34 +6,34 @@
 
 <PageTitle>SpiderWatcher-Home</PageTitle>
 
-<div class="container-fluid bg-dark text-white">
-    <div class="row full-height">
+<div class="container-fluid bg-dark text-white full-height d-flex justify-content-center align-items-center">
+    <div class="row w-100">
         <div class="col-md-6 d-flex justify-content-center align-items-center left-section">
             <div class="image-container position-relative">
-                <img src="https://storage.prompt-hunt.workers.dev/clgof48ov004vjs08tdzg1ggm_1" alt="Your Image" class="img-fluid">
-                <h1 class="image-text position-absolute text-center w-100">SpiderWatcher</h1>
+                <img src="https://storage.prompt-hunt.workers.dev/clgof48ov004vjs08tdzg1ggm_1" alt="Your Image" class="img-fluid large-image">
+                <h1 class="image-text position-absolute text-center w-100 titleImg">SpiderWatcher</h1>
             </div>
         </div>
         <div class="col-md-6 d-flex justify-content-center align-items-center right-section bg-dark">
-            <div class="w-75">
-                <h2 class="text-info">Login</h2>
+            <div class="w-100 px-3">
+                <h2 class="text-info text-center loginBig">Login</h2>
                 <div class="form-group">
-                    <label for="username" class="text-light">Username</label>
-                    <InputText id="username" @bind-Value="loginUserDTO.UserName" class="form-control bg-secondary text-white" placeholder="Usuario" required />
+                    <label for="username" class="text-light label-medium">Username</label>
+                    <InputText id="username" @bind-Value="loginUserDTO.UserName" class="form-control bg-secondary text-white small-input" placeholder="Usuario" required />
                 </div>
                 <div class="form-group">
-                    <label for="password" class="text-light">Password</label>
-                    <InputText id="password" @bind-Value="loginUserDTO.Password" class="form-control bg-secondary text-white" placeholder="Contraseña" required />
+                    <label for="password" class="text-light label-medium">Password</label>
+                    <InputText id="password" @bind-Value="loginUserDTO.Password" class="form-control bg-secondary text-white small-input" placeholder="Contraseña" required Type="password" />
                     <a href="#" @onclick="ShowRecoverAccount" class="text-info">Forgot Password?</a>
                 </div>
                 <div class="form-group text-center">
-                    <button class="btn btn-primary btn-block" @onclick="Login">Login</button>
+                    <button class="btn btn-primary btn-block smaller-btn" @onclick="Login">Login</button>
                 </div>
                 <div>
                     <label></label>
                 </div>
                 <div class="form-group text-center">
-                    <button class="btn btn-secondary" @onclick="ShowModal">Create Account</button>
+                    <button class="btn btn-secondary smaller-btn" @onclick="ShowModal">Create Account</button>
                 </div>
             </div>
         </div>
@@ -122,20 +122,69 @@
 }
 
 <style>
+    .full-height {
+        height: 100vh;
+    }
+
     .image-container {
         position: relative;
         text-align: center;
     }
 
     .image-text {
-        top: 10px; /* Ajusta este valor según sea necesario */
+        top: 10px;
         left: 50%;
         transform: translateX(-50%);
         color: white;
-        font-size: 2rem;
+        font-size: 3rem;
         z-index: 1;
     }
+
+    .large-image {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+    }
+
     .gradient-background {
         backdrop-filter: blur(10px);
+    }
+
+    .left-section, .right-section {
+        padding: 2rem;
+    }
+
+    .form-control {
+        font-size: 1.25rem; 
+        padding: 0.75rem; 
+    }
+
+    .btn {
+        font-size: 1rem; 
+        padding: 0.5rem 1rem; 
+    }
+
+    .smaller-btn {
+        font-size: 1rem;
+        padding: 0.5rem 1rem; 
+    }
+
+    .small-input {
+        width: 100%; 
+        height: auto;
+    }
+
+    .label-medium{
+        font-size: 1.5rem;
+    }
+
+    .loginBig{
+        font-size: 3rem;
+        font-style: Aileron;
+        font-weight: bold;
+    }
+
+    .titleImg{
+        text-decoration: underline;
     }
 </style>
