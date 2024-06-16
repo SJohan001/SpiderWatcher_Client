@@ -20,8 +20,12 @@
             </div>
         </div>
     </div>
-    <!-- Video Thumbnails will be inserted here -->
-    @if (contents2 is null)
+
+    @if (isLoading)
+    {
+        <p>Cargando...</p>
+    }
+    else if (contents2 is null)
     {
         <p>Empty</p>
     }
@@ -44,17 +48,14 @@
                         {
                             <img src="" class="card-img-top" alt="No image" />
                         }
-
                         <div class="card-body">
                             <p class="card-text titleCardText align-items-center"><strong>@content.title</strong></p>
                         </div>
-
                     </div>
                 </div>
             }
         </div>
     }
-
 </div>
 
 @code {
@@ -64,11 +65,20 @@
     private ContentsDTO contentsDTO = new ContentsDTO();
     private List<ContentsDTO> allContents = new List<ContentsDTO>();
     private List<ContentsDTO> contents2 = new List<ContentsDTO>();
+    private bool authenticated;
+    private bool isLoading = true;
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        LoadAllContents();
-        return base.OnInitializedAsync();
+        authenticated = await AuthService.IsUserAuthenticatedAsync();
+        if (!authenticated)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            await LoadAllContentsAsync();
+        }
     }
 
     private async Task BackButtonClicked()
@@ -84,13 +94,14 @@
         }
     }
 
-    private async void LoadAllContents()
+    private async Task LoadAllContentsAsync()
     {
+        isLoading = true;
         try
         {
             var token = await AuthService.GetTokenAsync();
             Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var userID = 42; //esto habra que jalarlo de la sesion
+            var userID = 42; // esto habra que jalarlo de la sesion
             var response = await Http.GetAsync($"Content/all/{userID}");
             if (response.IsSuccessStatusCode)
             {
@@ -101,7 +112,6 @@
                     content.ImageData = await AzureBlobService.GetImageAsync(content.imageReference);
                 }
                 contents2 = new List<ContentsDTO>(allContents);
-                StateHasChanged();
             }
             else
             {
@@ -112,6 +122,7 @@
         {
             errorMessage = ex.Message;
         }
+        isLoading = false;
     }
 
     private void ExecuteSearch()
