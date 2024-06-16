@@ -2,6 +2,7 @@
 @using SpiderWatcher_Client.Services
 @inject NavigationService NavService
 @inject NavigationManager Navigation
+@inject AuthenticationService AuthService
 
 <div>
     <div class="top-row ps-3 navbar navbar-dark position-relative">
@@ -66,8 +67,9 @@
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private void LogOut()
+    private async Task LogOut()
     {
+        await AuthService.LogoutAsync();
         Navigation.NavigateTo("/");
     }
 
