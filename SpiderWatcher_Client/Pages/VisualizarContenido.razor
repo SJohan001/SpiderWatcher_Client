@@ -2,6 +2,7 @@
 @using SpiderWatcher_Client.Conexion
 @using SpiderWatcher_Client.DTOs.ContentDTO
 @using Newtonsoft.Json
+@using System.Net.Http.Headers
 @inject Conexion.AzureBlobService AzureBlobService
 @inject AuthenticationService AuthService
 @inject NavigationManager NavigationManager
@@ -65,6 +66,8 @@ else
     {
         try
         {
+            var token = await AuthService.GetTokenAsync();
+            Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await Http.GetAsync($"Content/{Id}");
             if(response.IsSuccessStatusCode)
             {
