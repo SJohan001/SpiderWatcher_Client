@@ -13,28 +13,12 @@
 @if (!authenticated)
 {
     <p>Redireccionando...</p>
-    @code {
-    private bool authenticated;
-
-    protected override async Task OnInitializedAsync()
-    {
-        authenticated = await AuthService.IsUserAuthenticatedAsync();
-        if (!authenticated)
-        {
-            NavigationManager.NavigateTo("/");
-        }
-        else
-        {
-            await CargarInformacion();
-        }
-    }
-}
 }
 else
 {
     <div class="container mt-4 bg-dark text-white">
         <div class="video-preview">
-            @if(readContentDTO.ImageData != null)
+            @if (readContentDTO.ImageData != null)
             {
                 <img src="data:image/png;base64,@Convert.ToBase64String(readContentDTO.ImageData)" class="img-fluid" alt="Vista Previa del Video">
             }
@@ -55,38 +39,56 @@ else
     </div>
 }
 
-
 @code {
     [Parameter]
     public string Id { get; set; }
 
-    ReadContentDTO readContentDTO = new ReadContentDTO();
+    private bool authenticated;
+    private ReadContentDTO readContentDTO = new ReadContentDTO();
 
-    private async Task CargarInformacion()
+    protected override async Task OnInitializedAsync()
+    {
+        await InitializeComponentAsync();
+    }
+
+    private async Task InitializeComponentAsync()
+    {
+        authenticated = await AuthService.IsUserAuthenticatedAsync();
+        if (!authenticated)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            await LoadContentAsync();
+        }
+    }
+
+    private async Task LoadContentAsync()
     {
         try
         {
             var token = await AuthService.GetTokenAsync();
             Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await Http.GetAsync($"Content/{Id}");
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
                 string responseBody = await response.Content.ReadAsStringAsync();
                 readContentDTO = JsonConvert.DeserializeObject<ReadContentDTO>(responseBody);
                 readContentDTO.ImageData = await AzureBlobService.GetImageAsync(readContentDTO.ImageReference);
-
             }
             else
             {
                 Console.WriteLine("Error al obtener el contenido.");
             }
-        }catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             Console.WriteLine($"Error: {ex.Message}");
         }
     }
 
-    private async Task BackButtonClicked()
+    private void BackButtonClicked()
     {
         NavigationManager.NavigateTo("/contenidoBusqueda");
     }
