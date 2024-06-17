@@ -84,6 +84,16 @@
     private bool showModal = false;
     private bool showRecoverAccount = false;
 
+    //on initialize
+    protected override async Task OnInitializedAsync()
+    {
+        //if user is authenticated, redirect to contenidoBusqueda
+        var isAuthenticated = await AuthService.IsUserAuthenticatedAsync();
+        if (isAuthenticated)
+        {
+            NavigationManager.NavigateTo("/contenidoBusqueda");
+        }
+    }
     private void ShowModal()
     {
         showModal = true;
