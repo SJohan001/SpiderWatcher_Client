@@ -27,6 +27,8 @@ else
                 <img src="" class="img-fluid" alt="Vista Previa del Video">
             }
             <button class="play-button btn btn-primary" @onclick="PlayVideo">&#9658;</button>
+            <div class="blurred-sides left"></div>
+            <div class="blurred-sides right"></div>
             <button class="btn btn-light back-button" @onclick="BackButtonClicked">&#x2190; Atrás</button>
         </div>
         <div class="video-details mt-3">
@@ -99,3 +101,48 @@ else
         NavigationManager.NavigateTo($"/reproducirContenido/{videoReference}");
     }
 }
+
+
+<style>
+    .image-container {
+        position: relative;
+        display: inline-block;
+    }
+
+        .image-container img {
+            display: block;
+            max-width: 100%;
+        }
+
+    .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(255, 255, 255, 0.7);
+        border: none;
+        padding: 10px 20px;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    .blurred-sides {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 50px;
+        background: rgba(255, 255, 255, 0.7);
+        z-index: 1;
+    }
+
+        .blurred-sides.left {
+            left: 0;
+            background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.7));
+        }
+
+        .blurred-sides.right {
+            right: 0;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.7));
+        }
+</style>
