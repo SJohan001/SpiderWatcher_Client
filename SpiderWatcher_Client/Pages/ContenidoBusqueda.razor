@@ -106,7 +106,7 @@
         {
             var token = await AuthService.GetTokenAsync();
             Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var userID = 42; // esto habra que jalarlo de la sesion
+            var userID = await AuthService.GetUserIdAsync();
             var response = await Http.GetAsync($"Content/all/{userID}");
             if (response.IsSuccessStatusCode)
             {
