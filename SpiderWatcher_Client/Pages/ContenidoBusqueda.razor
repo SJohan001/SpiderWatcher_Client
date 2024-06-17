@@ -16,7 +16,7 @@
         <div class="col bg-dark">
             <div class="input-group">
                 <span class="input-group-text icon bg-dark text-white">&#128269;</span>
-                <input type="text" id="searchInput" class="form-control bg-secondary text-white" placeholder="Buscar" @bind="searchQuery" @onkeydown="HandleKeyDown">
+                <input type="text" id="searchInput" class="form-control bg-secondary text-white input-white" placeholder="Buscar" @bind="searchQuery" @onkeydown="HandleKeyDown">
             </div>
         </div>
     </div>
@@ -144,5 +144,9 @@
     .titleCardText{
         font-size: 1.5rem;
         color: #00e5ff;
+    }
+
+    .input-white::placeholder {
+        color: #ffff;
     }
 </style>
