@@ -42,13 +42,14 @@
 
     private void SendEmail()
     {
+
         try
         {
             recoverPasswordDTO.Email = email;
             var response = Http.PostAsJsonAsync("User/Recover", recoverPasswordDTO);
             if (response.Result.IsSuccessStatusCode)
             {
-                //aqui vendria bien que active el boton de cambiar contraseña (osea el de hasta abajo)
+                
             }
             else
             {
@@ -62,34 +63,6 @@
         }
     }
 
-
-    /*private async Task ValidarCuenta(MouseEventArgs e)
-    {
-    validateUserDTO.UpdateType = "UpdateUser";
-    validateUserDTO.Password = loginUserDTO.Password;
-    validateUserDTO.UserName = loginUserDTO.UserName;
-
-    //validateUserDTO.IdUser = 39; //cambiar esto que esta hardcodeado
-    //convert response to CreateUserResponseDTO
-    validateUserDTO.IdUser = createUserResponseDTO.idUser;
-
-        try
-        {
-        var response = await Http.PutAsJsonAsync("User", validateUserDTO);
-            if (response.IsSuccessStatusCode)
-            {
-            successMessage = "Account validated successfully!";
-            }
-            else
-            {
-            errorMessage = "Failed to validate account.";
-    }
-    }
-    catch (Exception ex)
-        {
-        errorMessage = $"An error occurred: {ex.Message}";
-    }
-    }*/
 
     private void RecoverAccount()
     {
