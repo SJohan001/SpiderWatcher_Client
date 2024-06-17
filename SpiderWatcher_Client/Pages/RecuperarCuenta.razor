@@ -9,11 +9,11 @@
             <div class="card mt-5 bg-dark">
                 <div class="card-body bg-dark">
                     <h2 class="card-title text-light">Recover Account</h2>
-                    <form>
+                    <EditForm Model="@updateUserContainerDTO" OnValidSubmit="@RecoverAccount">
                         <div class="form-group mb-3">
                             <input type="email" id="email" name="email" class="form-control bg-secondary text-white input-white" placeholder="E-mail" required @bind="email">
                         </div>
-                        <button type="button" id="send-button" class="btn btn-primary btn-block mb-3" @onclick="SendClicked">Send</button>
+                        <button type="button" id="send-button" class="btn btn-secondary btn-secondary-custom btn-block mb-3" @onclick="SendEmail">Send</button>
                         <div class="form-row align-items-center mb-3">
                             <div class="col">
                                 <input type="text" id="code" name="code" class="form-control bg-secondary text-white input-white" placeholder="Code" required @bind="code" disabled="@string.IsNullOrEmpty(email)">
@@ -22,8 +22,8 @@
                         <div class="form-group mb-3">
                             <input type="password" id="new-password" name="new-password" class="form-control bg-secondary text-white input-white" placeholder="New Password" required @bind="newPassword" disabled="@string.IsNullOrEmpty(code)">
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block" @onclick="RecoverAccount" disabled="@string.IsNullOrEmpty(newPassword)">Accept</button>
-                    </form>
+                        <button type="submit" class="btn btn-primary btn-block" disabled="@string.IsNullOrEmpty(newPassword)">Accept</button>
+                    </EditForm>
                 </div>
             </div>
         </div>
@@ -33,19 +33,44 @@
 @code {
     private UpdateUserContainerDTO updateUserContainerDTO = new UpdateUserContainerDTO();
     private UpdatePasswordUserDTO updatePasswordUserDTO = new UpdatePasswordUserDTO();
+    private ValidateUserDTO validateUserDTO = new ValidateUserDTO();
+    private LoginUserDTO loginUserDTO = new LoginUserDTO();
     private string email;
     private string code;
     private string newPassword;
 
-    private void SendClicked()
+    private void SendEmail()
     {
         // Correo de recuperación
     }
 
-    private void VerifyClicked()
+    /*private async Task ValidarCuenta(MouseEventArgs e)
     {
-        // Verificar código de recuperación
-    }
+        validateUserDTO.UpdateType = "UpdateUser";
+        validateUserDTO.Password = loginUserDTO.Password;
+        validateUserDTO.UserName = loginUserDTO.UserName;
+
+        //validateUserDTO.IdUser = 39; //cambiar esto que esta hardcodeado
+        //convert response to CreateUserResponseDTO
+        validateUserDTO.IdUser = createUserResponseDTO.idUser;
+
+        try
+        {
+            var response = await Http.PutAsJsonAsync("User", validateUserDTO);
+            if (response.IsSuccessStatusCode)
+            {
+                successMessage = "Account validated successfully!";
+            }
+            else
+            {
+                errorMessage = "Failed to validate account.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"An error occurred: {ex.Message}";
+        }
+    }*/
 
     private void RecoverAccount()
     {
@@ -57,4 +82,16 @@
     .input-white::placeholder {
         color: #ffff; 
     }
+
+    .btn-secondary-custom {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        color: white;
+    }
+
+    .btn-secondary-custom:hover {
+        background-color: #0b5ed7;
+        border-color: #0a58ca;
+    }
+    
 </style>
