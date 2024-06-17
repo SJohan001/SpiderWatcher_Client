@@ -22,7 +22,7 @@
                         <div class="form-group mb-3">
                             <input type="password" id="new-password" name="new-password" class="form-control bg-secondary text-white input-white" placeholder="New Password" required @bind="newPassword" disabled="@string.IsNullOrEmpty(code)">
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block" disabled="@string.IsNullOrEmpty(newPassword)">Accept</button>
+                        <button type="submit" class="btn btn-primary btn-block" @onclick="RecoverAccount" disabled="@string.IsNullOrEmpty(newPassword)">Accept</button>
                     </EditForm>
                 </div>
             </div>
@@ -35,46 +35,82 @@
     private UpdatePasswordUserDTO updatePasswordUserDTO = new UpdatePasswordUserDTO();
     private ValidateUserDTO validateUserDTO = new ValidateUserDTO();
     private LoginUserDTO loginUserDTO = new LoginUserDTO();
+    private RecoverPasswordDTO recoverPasswordDTO = new RecoverPasswordDTO();
     private string email;
     private string code;
     private string newPassword;
 
     private void SendEmail()
     {
-        // Correo de recuperación
-    }
-
-    /*private async Task ValidarCuenta(MouseEventArgs e)
-    {
-        validateUserDTO.UpdateType = "UpdateUser";
-        validateUserDTO.Password = loginUserDTO.Password;
-        validateUserDTO.UserName = loginUserDTO.UserName;
-
-        //validateUserDTO.IdUser = 39; //cambiar esto que esta hardcodeado
-        //convert response to CreateUserResponseDTO
-        validateUserDTO.IdUser = createUserResponseDTO.idUser;
-
         try
         {
-            var response = await Http.PutAsJsonAsync("User", validateUserDTO);
-            if (response.IsSuccessStatusCode)
+            recoverPasswordDTO.Email = email;
+            var response = Http.PostAsJsonAsync("User/Recover", recoverPasswordDTO);
+            if (response.Result.IsSuccessStatusCode)
             {
-                successMessage = "Account validated successfully!";
+                //aqui vendria bien que active el boton de cambiar contraseña (osea el de hasta abajo)
             }
             else
             {
-                errorMessage = "Failed to validate account.";
+                // Mensaje de error
             }
-        }
-        catch (Exception ex)
+
+        }catch(Exception ex)
         {
-            errorMessage = $"An error occurred: {ex.Message}";
+            // Mensaje de error
+            Console.WriteLine("Error: "+ex);
         }
+    }
+
+
+    /*private async Task ValidarCuenta(MouseEventArgs e)
+    {
+    validateUserDTO.UpdateType = "UpdateUser";
+    validateUserDTO.Password = loginUserDTO.Password;
+    validateUserDTO.UserName = loginUserDTO.UserName;
+
+    //validateUserDTO.IdUser = 39; //cambiar esto que esta hardcodeado
+    //convert response to CreateUserResponseDTO
+    validateUserDTO.IdUser = createUserResponseDTO.idUser;
+
+        try
+        {
+        var response = await Http.PutAsJsonAsync("User", validateUserDTO);
+            if (response.IsSuccessStatusCode)
+            {
+            successMessage = "Account validated successfully!";
+            }
+            else
+            {
+            errorMessage = "Failed to validate account.";
+    }
+    }
+    catch (Exception ex)
+        {
+        errorMessage = $"An error occurred: {ex.Message}";
+    }
     }*/
 
     private void RecoverAccount()
     {
         // Recuperar cuenta
+        updateUserContainerDTO.UpdateType = "UpdatePassword";
+        updateUserContainerDTO.Password = newPassword;
+        updateUserContainerDTO.UserEmail = email;
+        updateUserContainerDTO.ValidationMessage = "";
+        updateUserContainerDTO.UserName = "";
+
+        var response = Http.PutAsJsonAsync("User", updateUserContainerDTO);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            // Mensaje de éxito
+            Console.WriteLine("Contraseña actualizada");
+        }
+        else
+        {
+            // Mensaje de error
+        }
+
     }
 }
 

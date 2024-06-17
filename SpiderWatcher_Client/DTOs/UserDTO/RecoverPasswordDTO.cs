@@ -2,6 +2,6 @@
 {
     public class RecoverPasswordDTO
     {
-        public string Email { get; init; }
+        public string Email { get; set; }
     }
 }
