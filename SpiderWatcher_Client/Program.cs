@@ -16,7 +16,7 @@ builder.Services.AddScoped(sp => new AzureBlobService(blobStorageConnectionStrin
 
 builder.Services.AddScoped(sp => new AzureVideoService(blobStorageConnectionString, videoContainerName ));
 
-var apiBaseDeAddress = "https://apigatewaysw.azurewebsitesnet";
+var apiBaseDeAddress = "https://apigatewaysw.azurewebsites.net";
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseDeAddress) });
 
 builder.Services.AddScoped<AuthenticationService>();
